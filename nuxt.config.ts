@@ -27,4 +27,17 @@ export default defineNuxtConfig({
       Roboto: [400, 500, 600, 700],
     },
   },
+
+  app: {
+    head: {
+      title: 'Интернет-магазин',
+      link: [
+        {
+          rel: 'icon',
+          type: 'image/png',
+          href: '/favicon.png',
+        },
+      ],
+    },
+  },
 })
