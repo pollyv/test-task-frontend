@@ -42,8 +42,8 @@
     </div>
 
     <button
-      class="opacity-0 group-hover:opacity-100 transition-opacity bg-black text-white w-1/2 px-2 py-2 rounded-md hover:bg-gray-800 cursor-pointer"
-      @click="$emit('add-to-cart', product)"
+      class="hidden group-hover:block bg-black text-white w-1/2 px-2 py-2 rounded-md hover:bg-gray-800 cursor-pointer"
+      @click="handleAddToCart"
     >
       В корзину
     </button>
@@ -54,14 +54,18 @@
 import { computed, defineProps, defineEmits } from 'vue'
 import type { Product } from '~/types'
 
-const props = defineProps<{
-  product: Product
-}>()
-defineEmits(['add-to-cart'])
+const props = defineProps<{ product: Product }>()
+const emit = defineEmits(['add-to-cart'])
 
 const discountPercent = computed(() => {
   if (!props.product.oldPrice) return 0
   const { oldPrice, newPrice } = props.product
   return Math.round(((oldPrice - newPrice) / oldPrice) * 100)
 })
+
+const handleAddToCart = (event: MouseEvent) => {
+  event.preventDefault()
+  event.stopPropagation()
+  emit('add-to-cart', props.product)
+}
 </script>
